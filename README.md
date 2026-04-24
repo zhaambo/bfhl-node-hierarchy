@@ -2,8 +2,6 @@
 
 A REST API and frontend tool for processing hierarchical node relationships. Feed it edge definitions like `A->B`, and it builds trees, detects cycles, handles duplicates, and returns structured insights — all in one POST request.
 
-Built for the SRM Full Stack Engineering Challenge.
-
 ---
 
 ## What It Does
@@ -40,8 +38,6 @@ You give it an array of edges (parent-child relationships between single upperca
 | Frontend | Vanilla HTML/CSS/JS |
 | Fonts | Inter, JetBrains Mono (Google Fonts) |
 | Deployment | Render / Vercel / Railway |
-
-No database. No build step. No framework overhead. Just clean JavaScript.
 
 ---
 
@@ -174,35 +170,6 @@ Open `http://localhost:3000` in your browser — the frontend is served automati
 
 ---
 
-## Screenshots
-
-*Frontend — Input*
-<!-- Add screenshot of the input section here -->
-
-*Frontend — Results*
-<!-- Add screenshot of the results section here -->
-
----
-
-## Deployment
-
-### Render (recommended for backend)
-
-1. Push your code to GitHub
-2. Go to [render.com](https://render.com) → New Web Service
-3. Connect your GitHub repo
-4. Set:
-   - **Build Command:** `cd backend && npm install`
-   - **Start Command:** `cd backend && node app.js`
-   - **Root Directory:** (leave empty)
-5. Deploy
-
-### Vercel (alternative)
-
-1. Install Vercel CLI: `npm i -g vercel`
-2. From project root: `vercel`
-3. Follow the prompts
-
 ### Environment Variables
 
 | Variable | Default | Description |
@@ -211,30 +178,6 @@ Open `http://localhost:3000` in your browser — the frontend is served automati
 
 ---
 
-## How I Approached This Problem
-
-### Initial Thinking
-
-When I first read the problem, the core challenge was clear: take flat edge strings and build structured trees. But the devil's in the details — cycles, duplicates, multi-parent conflicts, and connected components all need careful handling.
-
-I decided to break it into a clean pipeline: **validate → deduplicate → build graph → identify components → process each component → generate summary**. Each step is a pure function that takes input and returns output, making it easy to test and debug independently.
-
-### The Tricky Parts
-
-**Cycles.** The classic DFS approach with a visited set and a recursion stack is the right tool here. A node in the recursion stack means we're currently exploring its descendants — if we hit it again, that's a back edge, which means a cycle. Simple but you have to get the recursion stack cleanup right (remove the node when backtracking).
-
-**Multi-parent resolution.** The spec says "first-encountered parent edge wins." This means I need to track which parent each child already has. If a new edge tries to assign a second parent to a child, I silently discard it. Important: this is different from the duplicate check — `A->D` and `B->D` are not duplicates (different parents), but the second one gets dropped because D already has parent A.
-
-**Connected components.** The input can contain multiple independent graphs. I use BFS on an undirected view of the adjacency list to group nodes into components. Each component gets processed independently — its own root, its own cycle check, its own tree.
-
-**Root identification.** A root is any node that never appears as a child. If no such node exists (every node is someone's child), it's a pure cycle — use the lexicographically smallest node as the root.
-
-### Design Decisions
-
-- **Modular utils** — each processing step is its own file. Validator doesn't know about graphs, graph builder doesn't know about trees. Clean separation.
-- **No external dependencies** beyond Express and cors. No graph libraries, no lodash. The algorithms are straightforward enough that adding dependencies would just add complexity.
-- **Frontend on the same server** — Express serves the static files, so one deployment URL handles everything. No CORS issues between frontend and backend.
-- **Flexible input parsing** — the frontend accepts both JSON arrays and comma/newline-separated text. Users shouldn't have to format JSON by hand.
 
 ### Edge Cases
 
