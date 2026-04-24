@@ -214,7 +214,3 @@ curl -X POST http://localhost:3000/bfhl \
 | `["X->Y", "Y->Z", "Z->X"]` | Cycle detected, `has_cycle: true` |
 
 ---
-
-## License
-
-MIT
