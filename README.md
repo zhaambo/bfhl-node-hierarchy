@@ -1,6 +1,12 @@
 # BFHL — Node Hierarchy Processor
 
+
 A REST API and frontend tool for processing hierarchical node relationships. Feed it edge definitions like `A->B`, and it builds trees, detects cycles, handles duplicates, and returns structured insights — all in one POST request.
+
+## 🚀 Live Demo
+
+Frontend: https://bfhl-analyzer.netlify.app
+API: https://bfhl-api-2mi8.onrender.com/bfhl
 
 ---
 
@@ -37,7 +43,7 @@ You give it an array of edges (parent-child relationships between single upperca
 | Backend | Node.js, Express |
 | Frontend | Vanilla HTML/CSS/JS |
 | Fonts | Inter, JetBrains Mono (Google Fonts) |
-| Deployment | Render / Vercel / Railway |
+| Deployment | Render (API), Netlify (Frontend) |  
 
 ---
 
@@ -73,7 +79,7 @@ frontend/
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/bfhl-challenge.git
+git clone https://github.com/zhaambo/bfhl-node-hierarchy.git
 cd bfhl-challenge
 
 # Install backend dependencies
