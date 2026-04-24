@@ -1,6 +1,6 @@
 // --- Configuration ---
 // When deployed, the API is on the same origin. For local dev, adjust if needed.
-const API_URL = window.location.origin + '/bfhl';
+const API_URL = "https://bfhl-api-2mi8.onrender.com/bfhl";
 
 // --- DOM Elements ---
 const nodeInput = document.getElementById('nodeInput');
